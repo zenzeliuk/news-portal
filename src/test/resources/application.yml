@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/news-portal-g-48-test"
+    username: "postgres"
+    password: "248842"
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5000
+      driver-class-name: "org.postgresql.Driver"
