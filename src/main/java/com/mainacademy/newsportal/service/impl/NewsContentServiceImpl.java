@@ -28,7 +28,7 @@ public class NewsContentServiceImpl implements NewsContentService {
         newsContentRepository.saveAll(
                 contentList
                         .stream()
-                        .filter( it ->
+                        .filter(it ->
                                 !savedContent
                                         .stream()
                                         .map(NewsContent::getNewsUrl)

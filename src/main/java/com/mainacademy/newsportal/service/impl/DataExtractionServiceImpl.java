@@ -35,23 +35,23 @@ public class DataExtractionServiceImpl implements DataExtractionService {
         List<NewsResponseDTO.Article> topArticles = newsapiClient.getTopNews("en").getArticles();
         topArticles.addAll(newsapiClient.getTopNews("ru").getArticles());
         List<NewsContent> result = new ArrayList<>(convertToNewsModel(topArticles, NewsCategory.TOP));
+        // extract news
         List<String> resources = newsResourceRepository.findAll()
                 .stream()
                 .map(NewsResource::getApiId)
                 .collect(Collectors.toList());
-        // extract news
         List<NewsResponseDTO.Article> articles = new ArrayList<>();
         for (String resourceId : resources) {
             articles.addAll(newsapiClient.getOtherNews(resourceId).getArticles());
         }
-        result.addAll(convertToNewsModel(topArticles, null));
+        result.addAll(convertToNewsModel(articles, null));
         return result;
     }
 
     @Override
     public List<NewsResource> extractResources() {
-        List<ResourcesResponseDTO.Resource> resources = newsapiClient.getAcceptableResourses("en").getSources();
-        resources.addAll(newsapiClient.getAcceptableResourses("ru").getSources());
+        List<ResourcesResponseDTO.Resource> resources = newsapiClient.getAcceptableResources("en").getSources();
+        resources.addAll(newsapiClient.getAcceptableResources("ru").getSources());
         return resources.stream()
                 .map(resourceMapper::toModel)
                 .filter(it -> nonNull(it.getApiId()))
@@ -62,15 +62,16 @@ public class DataExtractionServiceImpl implements DataExtractionService {
         Map<String, NewsResource> resourcesMap = newsResourceRepository.findAll()
                 .stream()
                 .collect(Collectors.toMap(NewsResource::getApiId, it -> it));
-        List<String> resourseIds = resourcesMap.values()
+
+        List<String> resourceIds = resourcesMap.values()
                 .stream()
                 .map(NewsResource::getApiId)
                 .collect(Collectors.toList());
-
         return articles
                 .stream()
                 .filter(article -> nonNull(article.getSource().getId()) &&
-                        resourseIds.contains(article.getSource().getId()))
+                        resourceIds.contains(article.getSource().getId())
+                )
                 .map(article -> {
                     NewsResource resource = resourcesMap.get(article.getSource().getId());
                     return NewsContent.builder()

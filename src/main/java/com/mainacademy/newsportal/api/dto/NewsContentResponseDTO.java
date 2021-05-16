@@ -1,9 +1,11 @@
 package com.mainacademy.newsportal.api.dto;
 
+import com.mainacademy.newsportal.model.NewsContent;
 import lombok.*;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -40,5 +42,6 @@ public class NewsContentResponseDTO {
         private LocalDateTime publishedTime;
         private String content;
         private String category;
+
     }
 }

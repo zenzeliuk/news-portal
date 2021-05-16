@@ -37,5 +37,12 @@ public class NewsContentController {
         return new ResponseEntity<>(newsContentHandler.getNewsById(id, locale), HttpStatus.OK);
     }
 
-    // TODO: implement search by text
+    @GetMapping("find/{text}")
+    ResponseEntity<NewsContentResponseDTO> findByText(
+            @PathVariable String text,
+            @RequestParam Integer page,
+            @RequestParam Integer size,
+            Locale locale) {
+        return new ResponseEntity<>(newsContentHandler.findByText(text, page, size, locale), HttpStatus.OK);
+    }
 }

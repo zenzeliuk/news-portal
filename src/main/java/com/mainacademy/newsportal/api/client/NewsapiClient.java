@@ -23,7 +23,7 @@ public class NewsapiClient {
     private final RestTemplate newsapiRestTemplate;
 
     public NewsapiClient(
-            @Value("${client.newsapi.properties.api-key:40f23b5268a54562ad05a0e112b4e433}")
+            @Value("${client.newsapi.properties.api-key:f1c821175ea64a5c82b4f17151925c25}")
                     String apiKey,
             @Value("${client.newsapi.properties.base-url:https://newsapi.org}")
                     String baseUrl,
@@ -33,7 +33,7 @@ public class NewsapiClient {
         this.newsapiRestTemplate = newsapiRestTemplate;
     }
 
-    public ResourcesResponseDTO getAcceptableResourses(String language) {
+    public ResourcesResponseDTO getAcceptableResources(String language) {
         URIBuilder uriBuilder = getUriBuilder("/v2/sources");
         if (StringUtils.isBlank(language)) {
             language = DEFAULT_LANGUAGE;

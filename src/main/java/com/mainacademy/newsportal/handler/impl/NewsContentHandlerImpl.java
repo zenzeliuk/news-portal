@@ -46,6 +46,11 @@ public class NewsContentHandlerImpl implements NewsContentHandler {
         return newsContentMapper.toDTO(newsContentService.findById(id), locale);
     }
 
+    @Override
+    public NewsContentResponseDTO findByText(String text, Integer page, Integer size, Locale locale) {
+        return (NewsContentResponseDTO) newsContentMapper.toListDTO(newsContentService.findByText(text, page, size).toList(), locale);
+    }
+
     private Map<NewsContentResponseDTO.NewsCategoryDTO, Page<NewsContentResponseDTO.NewsContentDTO>> collectData(List<String> newsCategoryIds, Locale locale, int page, int size) {
         Map<NewsContentResponseDTO.NewsCategoryDTO, Page<NewsContentResponseDTO.NewsContentDTO>> data = new HashMap<>();
         newsCategoryIds.forEach(category ->

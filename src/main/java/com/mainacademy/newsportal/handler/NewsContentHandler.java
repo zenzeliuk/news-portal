@@ -11,4 +11,6 @@ public interface NewsContentHandler {
     NewsContentResponseDTO getNewsByCategory(String category, Integer page, Integer size, Locale locale);
 
     NewsContentResponseDTO.NewsContentDTO getNewsById(Integer id, Locale locale);
+
+    NewsContentResponseDTO findByText(String text, Integer page, Integer size, Locale locale);
 }
