@@ -40,6 +40,8 @@ class NewsContentServiceTest {
                         .build())
                 .build();
         newsContentService.save(newsContent);
+
+        assertEquals(newsContent, newsContentService.findById(1));
     }
 
 }
